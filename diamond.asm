@@ -18,6 +18,7 @@ section .text
 
 global ircd_strlen
 global ircd_ctoi
+global ircd_stoi
         
 ircd_strlen:
         ; arguments:
@@ -44,6 +45,48 @@ ircd_ctoi:
         cmp rax, 9
         jle .return
         mov BYTE [rsi], 1
+.return:
+        EPILOGUE
+
+ircd_stoi:
+        ; arguments
+        ;    parameters -> char*, (out) int*
+        ;    return -> int
+        PROLOGUE
+        mov rax, 0
+
+.loop:
+        mov BYTE r8, [rdi]
+        inc rdi
+        cmp r8, 0
+        je .return
+
+        ; save registers
+        push rax
+        push rdi
+        push rsi
+
+        mov rdi, r8
+        sub rsp, 16
+        lea rsi, [rsp + 16]        
+        call ircd_ctoi
+
+        cmp BYTE [rsp + 16], 1
+        je .error
+        
+        mov r8, rax
+        add rsp, 16
+        pop rsi
+        pop rdi
+        pop rax
+
+        imul rax, 10
+        add rax, r8
+        jmp .loop
+        
+.error:
+        mov BYTE [rsi], 1
+        
 .return:
         EPILOGUE
         
