@@ -1,10 +1,10 @@
 .PHONY: clean
 
-CC="gcc"
-LD="ld"
-AS="nasm"
-ASFLAGS="-f elf64"
-CFLAGS="-Wall"
+CC=gcc
+LD=ld
+AS=nasm
+ASFLAGS=-g -f elf64
+CFLAGS=-Wall
 
 main: main.o diamond.o
 	$(LD) $^ -o $@
