@@ -3,7 +3,7 @@
 CC=gcc
 LD=ld
 AS=nasm
-ASFLAGS=-g -f elf64
+ASFLAGS=-f elf64
 CFLAGS=-Wall
 
 main: main.o diamond.o
