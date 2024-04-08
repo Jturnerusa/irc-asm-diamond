@@ -1,4 +1,4 @@
-.PHONEY: clean
+.PHONY: clean
 
 CC="gcc"
 LD="ld"
